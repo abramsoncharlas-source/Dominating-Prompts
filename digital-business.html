@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominating Prompts - Digital Products for Entrepreneurs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --secondary: #ff0080;
+            --dark: #0a0e27;
+            --darker: #050816;
+            --light: #ffffff;
+            --accent: #00d4ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0e27 0%, #050816 100%);
+        }
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-50px, 50px) scale(1.1); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .cta-primary {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+        }
+        
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.6);
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.3);
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
+        }
+        
+        .product-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .product-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .product-card p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .product-price {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn-buy {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--dark);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .btn-buy:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        /* Lead Capture Section */
+        .lead-capture {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 30px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lead-capture::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 128, 0.2) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .lead-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lead-capture h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .lead-capture p {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .email-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .email-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 18px 25px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .email-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        .email-form button {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--secondary), #ff3399);
+            color: var(--light);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .email-form button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(255, 0, 128, 0.5);
+        }
+        
+        #form-message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            color: var(--primary);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            transform: translateY(-5px);
+        }
+        
+        .feature-item h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .feature-item p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            margin-top: 80px;
+        }
+        
+        footer p {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .email-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <header>
+        <nav class="container">
+            <div class="logo">DOMINATING PROMPTS</div>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Transform Your<br>Business Vision</h1>
+                <p>Premium digital products designed for entrepreneurs ready to scale</p>
+                <a href="#products" class="cta-primary">Explore Products</a>
+            </div>
+        </section>
+        
+        <!-- Products Section -->
+        <section class="products" id="products">
+            <div class="container">
+                <h2 class="section-title">Digital Products</h2>
+                
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-icon">🚀</div>
+                        <h3>Business Launch Blueprint</h3>
+                        <p>Complete step-by-step guide to launching your online business in 30 days. Includes templates, checklists, and proven strategies.</p>
+                        <div class="product-price">$47</div>
+                        <a href="https://josephsmom.gumroad.com/l/fiuzqr" class="btn-buy">Get Started</a>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-icon">📊</div>
+                        <h3>Social Media Mastery Pack</h3>
+                        <p>200+ customizable templates for Instagram, TikTok, and LinkedIn. Content calendar and engagement strategies included.</p>
+                        <div class="product-price">$37</div>
+                        <a href="https://josephsmom.gumroad.com/l/elxcog" class="btn-buy">Get Started</a>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-icon">💰</div>
+                        <h3>Sales Funnel Framework</h3>
+                        <p>Proven email sequences, landing page templates, and conversion optimization guides to maximize your revenue.</p>
+                        <div class="product-price">$67</div>
+                        <a href="https://josephsmom.gumroad.com/l/cygix" class="btn-buy">Get Started</a>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-icon">✨</div>
+                        <h3>Growth Accelerator Bundle</h3>
+                        <p>The ultimate collection of tools and resources to supercharge your business growth and reach your goals faster.</p>
+                        <div class="product-price">$97</div>
+                        <a href="https://josephsmom.gumroad.com/l/auieay" class="btn-buy">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Lead Capture Section -->
+        <section class="lead-capture">
+            <div class="container lead-content">
+                <h2>Get Free Resources</h2>
+                <p>Join 10,000+ entrepreneurs receiving weekly tips, templates, and exclusive offers</p>
+                
+                <form class="email-form" id="leadForm" onsubmit="handleLeadCapture(event)">
+                    <input type="email" id="emailInput" placeholder="Enter your email address" required>
+                    <button type="submit">Get Free Access</button>
+                </form>
+                
+                <div id="form-message"></div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Us</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3>⚡ Instant Access</h3>
+                        <p>Download your products immediately after purchase</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🎯 Battle-Tested</h3>
+                        <p>Strategies used by 1000+ successful businesses</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>📈 Results Driven</h3>
+                        <p>Practical frameworks that deliver real outcomes</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h3>🔄 Free Updates</h3>
+                        <p>Get lifetime access to all future improvements</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Dominating Prompts. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Lead capture form handler
+        function handleLeadCapture(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('emailInput').value;
+            const messageDiv = document.getElementById('form-message');
+            
+            // Store lead in localStorage (in production, send to your email service)
+            const leads = JSON.parse(localStorage.getItem('leads') || '[]');
+            leads.push({
+                email: email,
+                timestamp: new Date().toISOString(),
+                source: 'website'
+            });
+            localStorage.setItem('leads', JSON.stringify(leads));
+            
+            // Show success message
+            messageDiv.innerHTML = '✅ Success! Check your email for your free resources.';
+            messageDiv.style.color = '#00ff88';
+            
+            // Reset form
+            document.getElementById('leadForm').reset();
+            
+            // Clear message after 5 seconds
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 5000);
+            
+            console.log('Lead captured:', email);
+        }
+        
+        // Purchase handler
+        function handlePurchase(productName, event) {
+            event.preventDefault();
+            
+            // Store purchase intent
+            const purchases = JSON.parse(localStorage.getItem('purchase_intents') || '[]');
+            purchases.push({
+                product: productName,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('purchase_intents', JSON.stringify(purchases));
+            
+            alert(`Thank you for your interest in "${productName}"!\n\nTo complete your purchase:\n1. Set up a payment processor (Stripe, PayPal, Gumroad)\n2. Create your digital product files\n3. Configure automatic delivery\n\nFor now, this demo captures your interest.`);
+            
+            console.log('Purchase intent:', productName);
+        }
+        
+        // Smooth scroll for CTA
+        document.querySelector('.cta-primary').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#products').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+    </script>
+</body>
+</html>
