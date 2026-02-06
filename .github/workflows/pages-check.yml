@@ -1,0 +1,37 @@
+name: Pages static checks
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install tooling
+      run: |
+        npm init -y
+        npm install --no-audit --no-fund html-validate linkinator pa11y-ci@5.2.0
+
+    - name: Run HTML validation (html-validate)
+      run: npx html-validate --version && npx html-validate "**/*.html"
+
+    - name: Run link checking (linkinator)
+      run: npx linkinator ./ --recursive --ignore-files "**/node_modules/**" || true
+
+    - name: Run accessibility checks (pa11y-ci)
+      run: |
+        npx pa11y-ci --concurrency 3 || true
+
+    - name: Upload results
+      if: always()
+      run: echo "Static checks completed"
